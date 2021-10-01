@@ -1,21 +1,33 @@
-const http = require('http')
-const chalk = require('chalk');
-// const keys = require('./keys')
+const express = require('express')
+const app = express()
+const path = require('path')
 
-// console.log(keys);
 
-const server = http.createServer((req,res) => {
-    console.log(chalk.yellow("Server Connected"));
-    // console.log(req)
-    if(req.url == '/') {
-        res.write('<h1>Hello Welcome</h1>')
-        res.end();
-    }
-    else if (req.url == '/about') {
-        res.write('<h1>About Page</h1>')
-        res.end();
-    }
-
+app.get('/',(req,res) => {
+    res.sendFile(path.join(__dirname,'home.html'))
 })
 
-server.listen(8000)
+app.get('/contact',(req,res) => {
+    res.send('<h1>Contact Us</h1>')
+})
+
+app.post('/data',(req,res) => {
+    res.send('<h1>Hello from post request</h1>')
+})
+
+app.get('/about',(req,res) => {
+    res.status(404).json({"msg":"Hello from object"})
+})
+
+app.get('/re',(req,res) => {
+    res.redirect('/contact')
+})
+
+app.get('*',(req,res) => {
+    res.send('<h1>Page Not Found</h1>')
+})
+
+
+app.listen(8800,() => {
+    console.log("Server Connected");
+})
