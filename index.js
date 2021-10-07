@@ -4,7 +4,11 @@ const path = require('path')
 
 const userRoutes = require('./routes/user')
 
+app.use(express.static('public'))
 app.use(express.urlencoded({extended:false}))
+
+app.set('view engine','ejs')
+app.set('views','views')
 
 app.use('/',userRoutes)
 
@@ -13,5 +17,5 @@ app.get('*',(req,res) => {
 })
 
 app.listen(8800,() => {
-    console.log("Server Connected");
+    console.log("Server Connected at 8800");
 })

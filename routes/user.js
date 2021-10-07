@@ -2,11 +2,15 @@ const router = require('express').Router()
 const path = require('path')
 
 router.get('/',(req,res) => {
-    res.sendFile(path.join(__dirname,'../form.html'))
+
+
+    res.render('home',{name:'Aman',arr:['amit','rahul','neha'],isAdmin:false})
+    // res.render('home',{obj:{name:'aman',age:21,salary:23000}})
 })
 
 router.get('/contact',(req,res) => {
-    res.send('<h1>Contact Us</h1>')
+    // res.send('<h1>Contact Us</h1>')
+    res.render('form')
 })
 
 router.post('/data',(req,res) => {
