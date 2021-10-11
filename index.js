@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const mongoose = require('mongoose');
 
 const userRoutes = require('./routes/user')
 
@@ -16,6 +17,12 @@ app.get('*',(req,res) => {
     res.send('<h1>Page Not Found</h1>')
 })
 
-app.listen(8800,() => {
-    console.log("Server Connected at 8800");
-})
+mongoose.connect('mongodb://localhost:27017/school')
+        .then(() => {
+            console.log("Database Connected");
+                app.listen(8800,() => {
+                    console.log("Server Connected at 8800");
+                })
+        })
+        .catch((err) => {console.log(err),process.exit(0);})
+

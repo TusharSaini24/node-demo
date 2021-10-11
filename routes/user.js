@@ -1,17 +1,25 @@
 const router = require('express').Router()
 const path = require('path')
+const multer  = require('multer')
 
-router.get('/',(req,res) => {
+const Student = require('../models/student')
+const userController = require('../controller/userController')
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    //   cb(null, file.originalname + '.' + file.mimetype.split('/')[1])
+    }
+  })
+  
+const upload = multer({ storage: storage })
 
-    res.render('home',{name:'Aman',arr:['amit','rahul','neha'],isAdmin:false})
-    // res.render('home',{obj:{name:'aman',age:21,salary:23000}})
-})
+router.get('/',userController.home)
 
-router.get('/contact',(req,res) => {
-    // res.send('<h1>Contact Us</h1>')
-    res.render('form')
-})
+router.get('/form', userController.form)
 
 router.post('/data',(req,res) => {
     res.send('<h1>Hello from post request</h1>')
@@ -25,18 +33,35 @@ router.get('/re',(req,res) => {
     res.redirect('/contact')
 })
 
-router.post('/getdata',(req,res) => {
+router.post('/getdata',upload.single('fufile'),(req,res) => {
     console.log(req.body);
-    let email = req.body.email;
-    let password = req.body.password;
-    if(email == 'abcd' && password == '123') {
-        res.send('<h1>Sucessfull</h1>')
-    }
-    else {
-        res.send('<h1>Failed</h1>')
-    }
+    console.log(req.file);
+    // let email = req.body.email;
+    // let password = req.body.password;
+    // if(email == 'abcd' && password == '123') {
+    //     res.send('<h1>Sucessfull</h1>')
+    // }
+    // else {
+    //     res.send('<h1>Failed</h1>')
+    // }
     // console.log("hello got data");
     // res.redirect('/contact')
+})
+
+router.get('/addinfo',(req,res) => {
+  res.render('infoform')
+})
+
+router.post('/saveinfo',async (req,res) => {
+  // console.log(req.body);
+  let name = req.body.name
+  let age = req.body.age
+
+  var data = {name,age}
+
+  const result = await Student(data).save()
+  console.log(result);
+
 })
 
 module.exports = router

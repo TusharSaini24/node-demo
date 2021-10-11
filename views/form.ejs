@@ -10,9 +10,18 @@
     <%- include('nav.ejs')%>
 
     
-    <form action="/getData" method="POST">
+    <form action="/getData" method="POST" enctype="multipart/form-data">
         <input type="text" name="email" id="email"><br>
         <input type="text" name="password" id="pass"><br>
+        <input type="checkbox" name="car" id="cb" >Car<br>
+        <input type="checkbox" name="bike" id="cb1" >Bike<br>
+        <input type="radio" name="cat" id="">Gen
+        <input type="radio" name="cat" id="">OBC
+        <input type="radio" name="cat" id="">SC
+
+
+        <input type="file" name="fufile" id="">
+
         <input type="submit" value="Submit">
     </form>
 </body>
