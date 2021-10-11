@@ -56,8 +56,9 @@ router.post('/saveinfo',async (req,res) => {
   // console.log(req.body);
   let name = req.body.name
   let age = req.body.age
+  let sal = req.body.sal
 
-  var data = {name,age}
+  var data = {name,age,salary:sal}
 
   const result = await Student(data).save()
   console.log(result);

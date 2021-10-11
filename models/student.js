@@ -8,6 +8,10 @@ const studentSchema = mongoose.Schema({
     age : {
         type:Number,
         required:true
+    },
+    salary : {
+        type:Number,
+        required:true
     }
 })
 
