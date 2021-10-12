@@ -65,4 +65,6 @@ router.post('/saveinfo',async (req,res) => {
 
 })
 
+router.get('/viewdata', userController.viewdata)
+
 module.exports = router
